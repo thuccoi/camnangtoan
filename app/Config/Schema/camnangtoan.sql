@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2015 at 05:27 AM
+-- Generation Time: Mar 17, 2015 at 06:37 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `math`
+-- Database: `camnangtoan`
 --
 
 -- --------------------------------------------------------
