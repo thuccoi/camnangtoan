@@ -18,6 +18,10 @@ class PostsController extends AppController {
         $this->Auth->allow();
     }
     public function index(){
-        
+        $user=$this->Session->read('Auth.User');
+        $this->set(compact('user'));
+    }
+    public function admin_index() {
+        return $this->redirect(array('controller'=>'users','action'=>'login'));
     }
 }

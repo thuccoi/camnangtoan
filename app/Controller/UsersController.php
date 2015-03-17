@@ -40,12 +40,27 @@ class UsersController extends AppController{
             $this->Session->setFlash(__('Your username or password was incorrect.'));
         }
     }
-
+    public function login() {
+        if ($this->request->is('post')) {
+            if ($this->Auth->login()) {
+                if ($this->Session->read('Auth.User')) {
+                    //$this->Session->setFlash('You are logged in!');
+                    return $this->redirect(array('action'=>'index','controller'=>'posts'));
+                }
+            }
+            $this->Session->setFlash(__('Your username or password was incorrect.'));
+            return $this->redirect(array('action'=>'index','controller'=>'posts'));
+        }
+    }
     public function admin_logout() {
         //Leave empty for now.
-        $this->Session->setFlash('Good-Bye');
+        //$this->Session->setFlash('Good-Bye');
         $this->redirect($this->Auth->logout());
-
+    }
+    public function logout() {
+        //Leave empty for now.
+        //$this->Session->setFlash('Good-Bye');
+        $this->redirect($this->Auth->logout());
     }
     public function admin_add() {
         if ($this->request->is('post')) {

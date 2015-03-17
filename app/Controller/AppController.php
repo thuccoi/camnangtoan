@@ -48,17 +48,15 @@ class AppController extends Controller {
         $this->Auth->allow('display');
         $this->Auth->loginAction = array(
             'controller' => 'users',
-            'action' => 'login',
-            'admin'=>TRUE
+            'action' => 'login'
         );
         $this->Auth->logoutRedirect = array(
-            'controller' => 'users',
-            'action' => 'login',
-            'admin'=>TRUE
+            'controller' => 'posts',
+            'action' => 'index'
         );
         $this->Auth->loginRedirect = array(
           'controller' => 'posts',
-          'action' => 'add'
+          'action' => 'index'
         );
     }
 }
