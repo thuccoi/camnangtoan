@@ -69,7 +69,7 @@
             </div><!-- /.row -->
             <div class="text-right">
                 <ol class="breadcrumb">
-                    <li><a href="#">Quên mật khẩu?</a></li>
+                    <li><a href="users/passmail">Quên mật khẩu?</a></li>
                     <li><a href="#">Tạo tài khoản mới</a></li>
                 </ol>
             </div>

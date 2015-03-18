@@ -11,12 +11,14 @@
  *
  * @author thuc
  */
+App::uses('CakeEmail', 'Network/Email');
 class UsersController extends AppController{
     //put your code here
+    var $uses=array('Mail','User');
     public function beforeFilter() {
         parent::beforeFilter();
+        //$this->Auth->deny();
         $this->Auth->allow();
-        //$this->Auth->deny('admin_index','admin_add');
     }
 
     public function admin_index(){
@@ -86,34 +88,84 @@ class UsersController extends AppController{
             );
         }
     }
-   
-    public function initDB() {
-        $group = $this->User->Group;
-
-        // Allow admins to everything
-        $group->id = 1;
-        $this->Acl->allow($group, 'controllers');
-
-        // allow managers to posts and widgets
-        $group->id = 2;
-        $this->Acl->deny($group, 'controllers');
-        $this->Acl->allow($group, 'controllers/Posts');
-        $this->Acl->allow($group, 'controllers/Widgets');
-
-        // allow users to only add and edit on posts and widgets
-        $group->id = 3;
-        $this->Acl->deny($group, 'controllers');
-        $this->Acl->allow($group, 'controllers/Posts/add');
-        $this->Acl->allow($group, 'controllers/Posts/edit');
-        $this->Acl->allow($group, 'controllers/Widgets/add');
-        $this->Acl->allow($group, 'controllers/Widgets/edit');
-
-        // allow basic users to log out
-        $this->Acl->allow($group, 'controllers/users/logout');
-
-        // we add an exit to avoid an ugly "missing views" error message
-        echo "all done";
-        exit;
+    public function passmail(){
+        if($this->request->is('post')){
+            $mail=$this->request->data['passmail']['mail'];
+            $username=$this->request->data['passmail']['username'];
+            if($this->User->findByEmail($mail)&&$this->User->findByUsername($username)){
+                $user = $this->User->find('all', array(
+                    'conditions' => array('User.email' => $mail)
+                ));
+                $cof=$this->Mail->find('all')[0]['Mail']['cofirm'];
+                //thay doi thong tin mail
+                $cof=str_replace("[name]",$user[0]['User']['firstname']." ".$user[0]['User']['lastname'],$cof);
+                
+                //luu ma thay doi repass vao databse
+                $user[0]['User']['repass']=Tool::generateRandomString();
+                $this->User->create();
+                $this->User->save($user[0]);
+                $cof=str_replace("[link]","http://localhost/camnangtoan/users/resetpass?user=".$username."&repass=".$user[0]['User']['repass'],$cof);
+                $cof=str_replace("[username]",$username,$cof);
+                
+                $Email = new CakeEmail('gmail');
+                $Email->from('camnangtoan@gmail.com');
+                $Email->to($mail);
+                $Email->subject('Cẩm nang toán học');
+                $Email->send($cof);
+                $this->Session->setFlash("Một hộp thư đã gửi tới mail của bạn, hãy vào mail để xác nhận.");
+                return $this->redirect(array('action'=>'resetpass'));
+            }else{
+                $this->Session->setFlash("Email đăng ký hoặc tài khoản của bạn không chính xác.");
+            }
+        }
     }
-
+    public function resetpass(){
+        if(isset($_GET['repass'])&&isset($_GET['user'])){
+            $user = $this->User->find('all', array(
+                        'conditions' => array('User.username' => $_GET['user'])
+                    ));
+            if($user[0]['User']['repass']==$_GET['repass']&&$_GET['repass']!="not"){
+                $mail=$user[0]['User']['email'];
+                //thay doi noi dung
+                $cof=$this->Mail->find('all')[0]['Mail']['modifi'];
+                $pass=Tool::generateRandomString(8);
+                $cof=str_replace("[pass]",$pass,$cof);
+                $cof=str_replace("[name]",$user[0]['User']['firstname']." ".$user[0]['User']['lastname'],$cof);
+                $cof=str_replace("[username]",$user[0]['User']['username'],$cof);
+                //luu vao database
+                $user[0]['User']['repass']="not";
+                $user[0]['User']['password']=$pass;
+                $this->User->create();
+                $this->User->save($user[0]);
+                $Email = new CakeEmail('gmail');
+                $Email->from('camnangtoan@gmail.com');
+                $Email->to($mail);
+                $Email->subject('Cẩm nang toán học');
+                $Email->send($cof);
+                $this->Session->setFlash("Yêu cầu thay đổi mật khẩu chính xác. Mời bạn vào hộp thư mail để nhận mật khẩu mới của mình.");
+                
+            }else{
+                $this->Session->setFlash("Yêu cầu thay đổi mật khẩu không chính xác.");
+            }
+        }  else {
+            
+        }
+    }
+    public function admin_mail() {
+        $mail=$this->Mail->findById(1);
+        if ($this->request->is('post')) {
+            $this->Mail->create();
+            $this->Mail->id=1;
+            if ($this->Mail->save($this->request->data)) {
+                $this->Session->setFlash(__('The mail has been saved'));
+                return $this->redirect(array('action' => 'mail'));
+            }
+            $this->Session->setFlash(
+                __('The mail could not be saved. Please, try again.')
+            );
+        }
+         if (!$this->request->data) {
+            $this->request->data = $mail;
+        }
+    }
 }

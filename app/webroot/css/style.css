@@ -29,3 +29,8 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     background: white;
     margin-bottom: -10px;
 }
+form div {
+   clear: none; 
+   margin-bottom: 0px; 
+   padding: 0px; 
+}

@@ -26,15 +26,16 @@ $cakeVersion = __d('Phiên bản', '%s','1.0')
 	<title>
 		<?php echo $cakeDescription ?>:
 		<?php echo $title_for_layout; ?>
+                <?php echo $scripts_for_layout; ?>
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
                 
-                echo $this->Html->css(array('bootstrap-theme.min',
+                echo $this->Html->css(array('cake.generic','bootstrap-theme.min',
                     'bootstrap.min','style'
                     ));
                 
-		echo $this->Html->script(array('bootstrap.min','jquery.min'));
+		echo $this->Html->script(array('ckeditor/ckeditor','bootstrap.min','jquery.min',array('inline' => false)));
                 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');

@@ -24,4 +24,5 @@ class PostsController extends AppController {
     public function admin_index() {
         return $this->redirect(array('controller'=>'users','action'=>'login'));
     }
+   
 }
