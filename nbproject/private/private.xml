@@ -5,12 +5,11 @@
         <group>
             <file>file:/C:/xampp/htdocs/camnangtoan/app/webroot/css/style.css</file>
             <file>file:/C:/xampp/htdocs/camnangtoan/app/View/Users/createuser.ctp</file>
+            <file>file:/C:/xampp/htdocs/camnangtoan/app/Controller/UsersController.php</file>
             <file>file:/C:/xampp/htdocs/camnangtoan/app/Controller/PostsController.php</file>
-            <file>file:/C:/xampp/htdocs/camnangtoan/app/View/Posts/index.ctp</file>
             <file>file:/C:/xampp/htdocs/camnangtoan/app/Controller/AppController.php</file>
-            <file>file:/C:/xampp/htdocs/camnangtoan/app/View/Elements/login.ctp</file>
-            <file>file:/C:/xampp/htdocs/camnangtoan/app/Config/Langs.php</file>
             <file>file:/C:/xampp/htdocs/camnangtoan/app/Model/User.php</file>
+            <file>file:/C:/xampp/htdocs/camnangtoan/app/Config/Langs.php</file>
         </group>
     </open-files>
 </project-private>

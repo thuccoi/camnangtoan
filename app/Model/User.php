@@ -49,14 +49,19 @@ class User extends AppModel {
             'message' => 'Phải nhập ít nhất 1 ký tự'
         ),
         'username' => array(
+            'checkunique' => array(
+                'rule' =>'isUnique',
+                'message' => 'Tài khoản đã tồn tại trong hệ thống.',
+                'on' =>'create'
+            ),
             'rule1' => array(
                 'rule' => 'alphaNumeric',
                 'message' => 'Chỉ được nhập chữ hoặc số, không có ký tự đặc biệt',
                 'last' => false
              ),
             'rule2' => array(
-                'rule' => array('minLength', 8),
-                'message' => 'Phải nhập ít nhất là 8 ký tự'
+                'rule' => array('minLength', 4),
+                'message' => 'Phải nhập ít nhất là 4 ký tự'
             )
         ),
         'password' => array(
@@ -71,11 +76,18 @@ class User extends AppModel {
             )
         ),
         'email' =>array(
-            'rule'=>'email',
-            'message'=>'Phải đúng định dạng email ví dụ camnangtoan@gmail.com'
+            'checkunique' => array(
+                'rule' =>'isUnique',
+                'message' => 'E mail đã tồn tại trong hệ thống.',
+                'on' =>'create'
+            ),
+            'rule1'=>array(
+                'rule'=>'email',
+                'message'=>'Phải đúng định dạng email ví dụ camnangtoan@gmail.com'
+            )
         ),
         'email_cf' =>array(
-            'email'=>array(
+            'rule1'=>array(
                 'rule'=>'email',
                 'message'=>'Phải đúng định dạng email ví dụ camnangtoan@gmail.com'
             ),
