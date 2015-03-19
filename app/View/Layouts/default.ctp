@@ -35,7 +35,9 @@ $cakeVersion = __d('Phiên bản', '%s','1.0')
                     'bootstrap.min','style'
                     ));
                 
-		echo $this->Html->script(array('ckeditor/ckeditor','bootstrap.min','jquery.min',array('inline' => false)));
+		echo $this->Html->script(array('ckeditor/ckeditor',
+                    'bootstrap.min','jquery.min','script',
+                    array('inline' => false)));
                 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -45,12 +47,14 @@ $cakeVersion = __d('Phiên bản', '%s','1.0')
 <body>
 	<div class="container">
 		<div class="header">
+                    
 		</div>
 		<div class="content">
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div class="footer">
+                    <?php echo $this->element('footer');?>
 		</div>
 	</div>
 </body>

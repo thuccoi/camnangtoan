@@ -1,10 +1,11 @@
 <!--cấp lại mật khẩu-->
-<div class="box-login">
+<div class="box-passmail">
     <?php
         echo $this->Form->create('passmail');
     ?>
     <div class="row">
         <div class="col-lg-3">
+            
         </div>
         <div class="col-lg-6">
             <div class="row">

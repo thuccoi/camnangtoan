@@ -107,3 +107,4 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 require_once 'tools.php';
+Configure::load('Langs');

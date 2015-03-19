@@ -18,7 +18,6 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 App::uses('Controller', 'Controller');
 
 /**
@@ -58,5 +57,17 @@ class AppController extends Controller {
           'controller' => 'posts',
           'action' => 'index'
         );
+        $lang='tiengviet.';
+        $this->set(compact('lang'));
+        if($this->request->is('post')){
+            if(isset($this->request->data['User']['lang'])){
+                $lang=$this->request->data['User']['lang'];
+                $this->set(compact('lang'));
+            }else if(isset($this->request->data['lang'])){
+                $lang=$this->request->data['lang'];
+                $this->set(compact('lang'));
+            }
+        }
     }
+    
 }

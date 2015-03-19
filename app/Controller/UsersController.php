@@ -17,8 +17,8 @@ class UsersController extends AppController{
     var $uses=array('Mail','User');
     public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->deny();
-        $this->Auth->allow();
+        $this->Auth->deny();
+        $this->Auth->allow('createuser','login','logout','passmail','resetpass');
     }
 
     public function admin_index(){
@@ -166,6 +166,14 @@ class UsersController extends AppController{
         }
          if (!$this->request->data) {
             $this->request->data = $mail;
+        }
+    }
+    public function createuser() {
+        if($this->request->is('post')){
+            if(!isset($this->request->data['lang'])){
+                $this->User->create();
+                $this->User->save($this->request->data);
+            }
         }
     }
 }
